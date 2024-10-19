@@ -1,4 +1,3 @@
-
 const servicios_ofrecidos = [
    {descripcion : 'CAPING'          , precio: 1},
    {descripcion : 'DIPPYNG'         , precio: 2},
@@ -24,7 +23,7 @@ function mostrarServicios(){
 }
 
 
-function agregarNumeros(numero){
+function agregarServicio(numero){
   const existeEnLista = servicios_reservados.includes(numero)
   const esNumero = typeof numero === "number"
  
@@ -44,8 +43,13 @@ function agregarNumeros(numero){
 
   function agregarReserva(){
     //Agrega una "Reserva de Servicio"
-    let servicio = parseInt(prompt("Ingrese el Nro del servicio que quiere reservar:"))    
-    agregarNumeros(servicio)        
+    let servicio = parseInt(prompt("Ingrese el Nro del servicio que quiere reservar:"))   
+    
+    if (servicio > 0 && servicio <= servicios_ofrecidos.length){
+      agregarServicio(servicio)      
+    } else{
+      alert (`Igreso un numero inválido. Debe ingresar un valor entre 0 y ${servicios_ofrecidos.length} `)
+    }  
   }
   
   
@@ -87,17 +91,51 @@ function mostrarReserva() {
     mostrarReserva ()
   }
 
+  function calcularTotalReserva() {
+    const serviciosDetalles = buscarDatosReserva(); // Consulto los servicios reservados
+    //let total = 0;
+    //for (let servicio of serviciosDetalles) {
+    //    total += servicio.precio; // Calculo el total, sumando los precios
+    //}    
+    //alert(`El monto total de su reserva es: $${total}`);
+    // return total
+
+    return serviciosDetalles.reduce((total, servicio) => total + servicio.precio, 0);
+  }
+
+  function mostrarReservaTotal() {
+    let listaReservaTotal = "Los Servicios Reservados:";
+    let totalreserva = 0
+    let i = 0;
+    const serviciosDetalles = buscarDatosReserva(); // Obtengo los servicios reservados
+  
+    for (let servicio of serviciosDetalles) {
+        i++;
+        listaReservaTotal += `\n ${i} - ${servicio.descripcion} - Precio: ${servicio.precio}`;
+    }
+    
+    totalreserva =  calcularTotalReserva() 
+    listaReservaTotal += `\n Total de la Reserva es:  ${totalreserva}`;
+
+    alert(listaReservaTotal); 
+  }
+
   function seleccionarOpcion(opcion){
     switch(opcion){
       case 1: 
+        //Muestra los servicios Ofrecidos por la Estetica
         mostrarServicios()
         break;
       case 2:
+        //Permite ingresar el Nro del Servicio
         reservarServicio()
         break;      
       case 3:
-        //alert("Finalizar Operaciones")
-        buscarDatosReserva ()
+        //Calcula el Monto Total de la Reserva
+        mostrarReservaTotal()
+        break; 
+      case 4:
+        alert('Gracias por utilizar nuestros servicios.')
         break; 
       default:
         alert("Se ingreso un dato no válido")
@@ -108,12 +146,13 @@ function mostrarReserva() {
     let loop = true
     alert("Buenos días")
     while(loop){
-      let opcion = parseInt(prompt("Operaciones a realizar: \n 1 - Mostrar Servicios Ofrecidos \n 2 - Reservar Servicio \n 3-  Pagar Reserva"))
+      let opcion = parseInt(prompt("Operaciones a realizar: \n 1 - Mostrar Servicios Ofrecidos \n 2 - Reservar Servicio \n 3-  Pagar Reserva \n 4- Finalizar Operaciones"))
       seleccionarOpcion(opcion)
-      loop = confirm("¿Desea seguir realizando operaciones?")
+      if (opcion !== 4) {
+        loop = confirm("¿Desea seguir realizando operaciones?")
+      } 
     }
     alert("Que tenga un buen día")
   }
   
   app()
-
