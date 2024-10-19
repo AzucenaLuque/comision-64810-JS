@@ -1,3 +1,4 @@
+
 const servicios_ofrecidos = [
    {descripcion : 'CAPING'          , precio: 1},
    {descripcion : 'DIPPYNG'         , precio: 2},
@@ -47,41 +48,39 @@ function agregarNumeros(numero){
     agregarNumeros(servicio)        
   }
   
-  function buscarDatosReserva (){
-    let servicio_array = []
-    let i = 0
-    let j = 0
-    alert (servicios_reservados)
-
-    for(servicio of servicios_reservados){
-      i++
-      j = servicios_reservados.values(i) +- 
-      alert(j)
-      alert(servicios_ofrecidos.descripcion[j])
-      alert(servicios_ofrecidos[j].precio)
-
-      const dato_array = {
-        descripcion: servicios_ofrecidos[j].descripcion,
-        precio: servicios_ofrecidos[j].precio
-      } 
-
-      alert('Alta Dato')
-      // Lo agrego al array
-      servicio_array.push(dato_array)
-      alert(servicio_array)
-      
-    }
   
+function buscarDatosReserva() {
+  let servicio_array = [];
+
+  for (let i = 0; i < servicios_reservados.length; i++) {
+      const j = servicios_reservados[i] - 1; // Restar 1 para que coincida con el índice
+
+      if (j >= 0 && j < servicios_ofrecidos.length) {
+          const dato_array = {
+              descripcion: servicios_ofrecidos[j].descripcion,
+              precio: servicios_ofrecidos[j].precio
+          };
+          servicio_array.push(dato_array);
+      } else {
+          console.warn(`El número de servicio ${servicios_reservados[i]} es inválido`);
+      }
   }
-  function mostrarReserva(){
-        let listaReserva = "Los Servicios Reservados:"
-        let i = 0
-        for(servicio of servicios_reservados){
-          i++
-          listaReserva += `\n ${i} - ${servicio}`
-        }
-        alert(listaReserva)
-   }
+
+  return servicio_array; // Devuelve el array con los servicios reservados
+}
+
+function mostrarReserva() {
+  let listaReserva = "Los Servicios Reservados:";
+  let i = 0;
+  const serviciosDetalles = buscarDatosReserva(); // Obtengo los servicios reservados
+
+  for (let servicio of serviciosDetalles) {
+      i++;
+      listaReserva += `\n ${i} - ${servicio.descripcion} - Precio: ${servicio.precio}`;
+  }
+  
+  alert(listaReserva);
+}
   
   function reservarServicio(){
     agregarReserva()
@@ -117,3 +116,4 @@ function agregarNumeros(numero){
   }
   
   app()
+
