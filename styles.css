@@ -1,0 +1,21 @@
+html,body{
+    margin: 0px;
+    background-color: #d9e9f0;
+    color: rgb(10, 10, 10);
+}
+
+.titulo{
+    text-align: center;
+    background-color: rgb(238, 14, 107);
+    color: white;
+    padding: 20px;
+    font-size: 25px;
+}
+
+.foto1 {
+    position: relative;
+    width: 150px;
+    left: 100px;
+    margin-left: -75px;
+
+}
