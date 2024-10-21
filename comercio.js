@@ -1,3 +1,4 @@
+
 const servicios_ofrecidos = [
    {descripcion : 'CAPING'          , precio: 1},
    {descripcion : 'DIPPYNG'         , precio: 2},
@@ -150,7 +151,10 @@ function mostrarReserva() {
       seleccionarOpcion(opcion)
       if (opcion !== 4) {
         loop = confirm("¿Desea seguir realizando operaciones?")
-      } 
+      } else {
+          loop = false
+          //console.log (loop)
+        }
     }
     alert("Que tenga un buen día")
   }
