@@ -1,3 +1,4 @@
+
 html,body{
     margin: 0px;
     background-color: #d9e9f0;
@@ -19,3 +20,52 @@ html,body{
     margin-left: -75px;
 
 }
+    .servicio {
+      margin: 20px 0;
+      padding: 10px;
+      border: 1px solid #ccc;
+      border-radius: 5px;
+    }
+
+    .mensaje {
+      margin-top: 20px;
+      font-size: 18px;
+      color: blue;
+    }
+
+ /* Para que los elementos dentro de .servicio-info me queden en una sola línea */
+.servicio-info {
+    display: flex;
+    align-items: center;  /* Centra verticalmente */
+    justify-content: space-between;  /* Distribuye el espacio, el botón a la derecha */
+    gap: 10px;  /* Agrega espacio entre los elementos */
+    margin-bottom: 10px;  /* Agrega un pequeño margen entre los servicios */
+  }
+  
+  .servicio-info h3 {
+    margin: 0;  /* Elimina el margen del h3 */
+  }
+  
+  .servicio-info .precio {
+    font-weight: bold;  /* Precio en Negrita */
+  }
+  
+  button.reservar-btn {
+    padding: 5px 10px;
+    cursor: pointer;
+    background-color: #ff0095;
+    color: white;
+    border: none;
+    border-radius: 5px;
+  }
+  
+  button.reservar-btn:hover {
+    background-color: #ff0095;
+  }
+
+  #total {
+    font-size: 20px;
+    color: #333;
+    font-weight: bold;
+    margin-top: 20px;
+  }
