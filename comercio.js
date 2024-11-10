@@ -1,162 +1,240 @@
+// Lista de tipo de servicio
+const tipo = {
+  CORPORAL: 'CORPORAL',
+  MANOS: 'MANOS',
+  PIES: 'PIES'
+};
 
-const servicios_ofrecidos = [
-   {descripcion : 'CAPING'          , precio: 1},
-   {descripcion : 'DIPPYNG'         , precio: 2},
-   {descripcion : 'MANOS COMUN'     , precio: 3},
-   {descripcion : 'MANOS SEMI'      , precio: 4},
-   {descripcion : 'MANOS RUSA'      , precio: 5},
-   {descripcion : 'RETIRADO SEMI'   , precio: 6}
- ]
+// Lista de servicios
+const servicios = [
+  { nombre: "Masaje combinado", precio: 35000, descripcion: "Masaje combinado", tipo: tipo.CORPORAL },
+  { nombre: "Masajes descontracturante", precio: 30000, descripcion: "Masajes descontracturante", tipo: tipo.CORPORAL },
+  { nombre: "Masajes relajante", precio: 25000, descripcion: "Masajes relajante", tipo: tipo.CORPORAL },
+  { nombre: "Belleza de pies", precio: 20000, descripcion: "Belleza de pies", tipo: tipo.PIES },
+  { nombre: "Esmaltado semipermanente", precio: 8000, descripcion: "Esmaltado semipermanente", tipo: tipo.PIES },
+  { nombre: "Pedicuria", precio: 25600, descripcion: "Pedicuria", tipo: tipo.PIES },
+  { nombre: "Podoestetica", precio: 30000, descripcion: "Este servicio es una atención más profunda para pies.", tipo: tipo.PIES },
+  { nombre: "Spa con Reflexología", precio: 20000, descripcion: "Exfoliar, hidratar y realizar reflexología.", tipo: tipo.PIES },
+  { nombre: "Uña Guía", precio: 10000, descripcion: "Solo para personas con malformación ungueal.", tipo: tipo.PIES },
+  { nombre: "Caping", precio: 30000, descripcion: "Para personas con uñas quebradizas.", tipo: tipo.MANOS },
+  { nombre: "Dipping", precio: 35000, descripcion: "Dipping", tipo: tipo.MANOS },
+  { nombre: "Manicura America, Japonesa", precio: 15000, descripcion: "Manicura con tratamiento nutricional.", tipo: tipo.MANOS, rangoPrecio: {min: 15000, max: 18000} },
+  { nombre: "Manicura con Semipermanente", precio: 20000, descripcion: "Esmalte que dura de 15 a 20 días.", tipo: tipo.MANOS },
+  { nombre: "Manicura rusa", precio: 18000, descripcion: "Ideal para personas con mucha producción de cutículas.", tipo: tipo.MANOS },
+  { nombre: "Nail Art", precio: 4800, descripcion: "Diseño artístico para uñas.", tipo: tipo.MANOS },
+  { nombre: "Retirado de sistema", precio: 10500, descripcion: "Retiro de sistema de uñas", tipo: tipo.MANOS },
+  { nombre: "Retirado Semi", precio: 3000, descripcion: "Retiro de esmalte semi-permanente", tipo: tipo.MANOS },
+  { nombre: "Sistema alargamiento de uñas", precio: 40000, descripcion: "Alargamiento de uñas para eventos.", tipo: tipo.MANOS }
+];
 
-let servicios_reservados = []
+// Decalaracion de Variables para almacenar los servicios reservados y el total, datos de Usuario
+let serviciosReservados = [];
+let total = 0;
 
-function mostrarServicios(){
-  //Muestra el listado de los "Servicios Ofrecidos" en el centro de estetica
-  let listaServicios = "Los Servicios Ofrecidos son:"
-
-  let i = 0
-  for(servicio of servicios_ofrecidos){
-    i++
-    listaServicios += `\n ${i} - ${servicio.descripcion} - Precio:  ${servicio.precio}`
-  }
-
-  alert(listaServicios)
-}
+let nombreUsuario = '';
+let emailUsuario = '';
+let celu_Usuario = '';
 
 
-function agregarServicio(numero){
-  const existeEnLista = servicios_reservados.includes(numero)
-  const esNumero = typeof numero === "number"
- 
-  //alert(esNumero)
-  //alert(existeEnLista)
-   //Controlo que el nro que ingresa esta en la lista 
-  if(existeEnLista){
-    //Sino muestro Mensaje de Error
-    console.warn(`El número ${numero} ya existe en la lista`)
-  } else if(!esNumero){
-    console.warn("El valor ingresado no es un número")
-  } else{
-    //Si existe, lo inserto en la reserva
-    servicios_reservados.push(numero)
-  }
-}
-
-  function agregarReserva(){
-    //Agrega una "Reserva de Servicio"
-    let servicio = parseInt(prompt("Ingrese el Nro del servicio que quiere reservar:"))   
-    
-    if (servicio > 0 && servicio <= servicios_ofrecidos.length){
-      agregarServicio(servicio)      
-    } else{
-      alert (`Igreso un numero inválido. Debe ingresar un valor entre 0 y ${servicios_ofrecidos.length} `)
-    }  
-  }
-  
-  
-function buscarDatosReserva() {
-  let servicio_array = [];
-
-  for (let i = 0; i < servicios_reservados.length; i++) {
-      const j = servicios_reservados[i] - 1; // Restar 1 para que coincida con el índice
-
-      if (j >= 0 && j < servicios_ofrecidos.length) {
-          const dato_array = {
-              descripcion: servicios_ofrecidos[j].descripcion,
-              precio: servicios_ofrecidos[j].precio
-          };
-          servicio_array.push(dato_array);
-      } else {
-          console.warn(`El número de servicio ${servicios_reservados[i]} es inválido`);
+document.addEventListener('DOMContentLoaded', function() {
+  document.getElementById('reservarServiciosBtn').addEventListener('click', function() {
+      if (capturarDatosFormulario()) {
+          const mensajeDiv = document.getElementById('mensaje');
+          mensajeDiv.innerHTML = `Datos de contacto registrados: <strong>${nombreUsuario}</strong> (${emailUsuario}, ${celu_Usuario}). Ahora puedes comenzar a reservar servicios.`;
       }
-  }
+  });
 
-  return servicio_array; // Devuelve el array con los servicios reservados
+  // Inicializa la página mostrando los servicios
+  mostrarServicios();
+});
+
+// Valida el formato del correo electrónico
+function esEmailValido(email) {
+  const regex = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,6}$/;
+  return regex.test(email);
 }
 
-function mostrarReserva() {
-  let listaReserva = "Los Servicios Reservados:";
-  let i = 0;
-  const serviciosDetalles = buscarDatosReserva(); // Obtengo los servicios reservados
-
-  for (let servicio of serviciosDetalles) {
-      i++;
-      listaReserva += `\n ${i} - ${servicio.descripcion} - Precio: ${servicio.precio}`;
-  }
-  
-  alert(listaReserva);
+// Valida el formato del Nro de Celu ingresado
+function esTelefonoValido(telefono) {
+  const regexTelefono = /^[0-9]{10}$/; // Numeros, tienen que ser 10 caracteres
+  return regexTelefono.test(telefono);
 }
-  
-  function reservarServicio(){
-    agregarReserva()
-    mostrarReserva ()
+
+// Ingreso de los datos para reservar
+function capturarDatosFormulario() {
+  // Ingreso los datos del Usuario
+  nombreUsuario = document.getElementById('nombre').value;
+  emailUsuario = document.getElementById('email').value;
+  celu_Usuario = document.getElementById('celu').value;
+
+  // Validar que todos los campos estén completos
+  if (!nombreUsuario || !emailUsuario || !celu_Usuario) {
+      alert('Por favor, complete todos los campos.');
+      return false; // Si algún campo está vacío, no se puede reservar
   }
 
-  function calcularTotalReserva() {
-    const serviciosDetalles = buscarDatosReserva(); // Consulto los servicios reservados
-    //let total = 0;
-    //for (let servicio of serviciosDetalles) {
-    //    total += servicio.precio; // Calculo el total, sumando los precios
-    //}    
-    //alert(`El monto total de su reserva es: $${total}`);
-    // return total
-
-    return serviciosDetalles.reduce((total, servicio) => total + servicio.precio, 0);
-  }
-
-  function mostrarReservaTotal() {
-    let listaReservaTotal = "Los Servicios Reservados:";
-    let totalreserva = 0
-    let i = 0;
-    const serviciosDetalles = buscarDatosReserva(); // Obtengo los servicios reservados
-  
-    for (let servicio of serviciosDetalles) {
-        i++;
-        listaReservaTotal += `\n ${i} - ${servicio.descripcion} - Precio: ${servicio.precio}`;
-    }
+  // Validar el formato del correo electrónico
+  if (!esEmailValido(emailUsuario)) {
+    // Muestra mensaje en pantalla
+    document.getElementById('errorEmail').style.display = 'inline';
     
-    totalreserva =  calcularTotalReserva() 
-    listaReservaTotal += `\n Total de la Reserva es:  ${totalreserva}`;
+    // Blanquea el campo de correo electrónico si no es válido
+    document.getElementById('email').value = ''; 
 
-    alert(listaReservaTotal); 
+    return false; // Si el correo no es válido, no se puede reservar
   }
 
-  function seleccionarOpcion(opcion){
-    switch(opcion){
-      case 1: 
-        //Muestra los servicios Ofrecidos por la Estetica
-        mostrarServicios()
-        break;
-      case 2:
-        //Permite ingresar el Nro del Servicio
-        reservarServicio()
-        break;      
-      case 3:
-        //Calcula el Monto Total de la Reserva
-        mostrarReservaTotal()
-        break; 
-      case 4:
-        alert('Gracias por utilizar nuestros servicios.')
-        break; 
-      default:
-        alert("Se ingreso un dato no válido")
+  if (!esTelefonoValido(celu_Usuario)) {
+    //alert('Por favor, ingrese un número de teléfono válido (10 dígitos).');
+     // Mostrar el mensaje de error por pantalla
+     document.getElementById('errorcelu').style.display = 'inline'
+     //Blanqueo el campo
+     document.getElementById('celu').value = ''; 
+    return false;
+  }
+
+  // Si todos los campos son válidos, permite que el usuario reserve
+  return true;
+}
+
+// Función para manejar la reserva de un servicio
+function reservarServicio(nombreServicio, precioServicio) {
+  // Verificar si los datos del formulario han sido ingresados
+  if (!nombreUsuario || !emailUsuario || !celu_Usuario) {
+    const mensajeDiv = document.getElementById('mensaje');
+    mensajeDiv.innerHTML = 'Por favor, complete el formulario de reserva antes de seleccionar los servicios.';
+    return;
+  }
+
+  // Guardar los servicios reservados en localStorage
+function guardarReservasEnLocalStorage() {
+  const reservasJSON = JSON.stringify(serviciosReservados);
+  localStorage.setItem('serviciosReservados', reservasJSON); //guarda los servicios
+  localStorage.setItem('total', total); // Guardar también el total
+}
+
+// Cargar las reservas desde localStorage
+function cargarReservasDesdeLocalStorage() {
+  const reservasJSON = localStorage.getItem('serviciosReservados');
+  const totalGuardado = localStorage.getItem('total');
+
+  if (reservasJSON) {
+    serviciosReservados = JSON.parse(reservasJSON);
+    total = parseFloat(totalGuardado) || 0;
+  }
+}
+
+// Eliminar las reservas del localStorage, para limpiar todo
+function eliminarReservasDelLocalStorage() {
+  localStorage.removeItem('serviciosReservados');
+  localStorage.removeItem('total');
+}
+
+  // Verificar si el servicio ya ha sido reservado
+  const servicioExistente = serviciosReservados.find(servicio => servicio.nombre === nombreServicio);
+
+  if (servicioExistente) {
+    // Si el servicio ya existe, mostramos un mensaje
+    const mensajeDiv = document.getElementById('mensaje');
+    mensajeDiv.innerHTML = `<strong>¡Este servicio ya ha sido reservado!</strong>`;
+    return; // Salir de la función para evitar que se agregue nuevamente
+  }
+
+  // Si no existe, agregar el servicio reservado a la lista
+  serviciosReservados.push({ nombre: nombreServicio, precio: precioServicio });
+
+  // Actualizar el total
+  total += precioServicio;
+
+  // Mostrar el mensaje de reserva
+  const mensajeDiv = document.getElementById('mensaje');
+  mensajeDiv.innerHTML = `Has reservado el servicio: <strong>${nombreServicio}</strong> por <strong>$${precioServicio}</strong>.`;
+
+  // Actualizar el total acumulado
+  actualizarTotal();
+
+  // Actualizar la lista de servicios reservados
+  mostrarServiciosReservados();
+
+  // Guardar en localStorage
+  guardarReservasEnLocalStorage();
+}
+
+// Función para mostrar los servicios
+function mostrarServicios() {
+  const container = document.getElementById('servicios-container');
+  container.innerHTML = '';  // Limpiar el contenedor
+
+  servicios.forEach(servicio => {
+    const servicioDiv = document.createElement('div');
+    servicioDiv.classList.add('servicio');
+    
+    // 
+    let precioTexto = `$${servicio.precio}`;
+    if (servicio.rangoPrecio) {
+      precioTexto = `$${servicio.rangoPrecio.min} - $${servicio.rangoPrecio.max}`;
     }
-  }
 
-  function app(){
-    let loop = true
-    alert("Buenos días")
-    while(loop){
-      let opcion = parseInt(prompt("Operaciones a realizar: \n 1 - Mostrar Servicios Ofrecidos \n 2 - Reservar Servicio \n 3-  Pagar Reserva \n 4- Finalizar Operaciones"))
-      seleccionarOpcion(opcion)
-      if (opcion !== 4) {
-        loop = confirm("¿Desea seguir realizando operaciones?")
-      } else {
-          loop = false
-          //console.log (loop)
-        }
-    }
-    alert("Que tenga un buen día")
+    servicioDiv.innerHTML = `
+      <div class="servicio-info">
+        <h3>${servicio.nombre} - ${servicio.descripcion} - <span class="precio">${precioTexto}</span></h3>
+        <button class="reservar-btn" onclick="reservarServicio('${servicio.nombre}', ${servicio.precio})">Reservar</button>
+      </div>
+    `;
+    container.appendChild(servicioDiv);
+  });
+}
+
+//Actualiza Lista de Reservados y Total, cuando se elimina uno de la reserva
+function eliminarServicio(nombreServicio) {
+  // Filtrar el servicio de la lista de reservados
+  serviciosReservados = serviciosReservados.filter(servicio => servicio.nombre !== nombreServicio);
+
+  // Restar el precio del total
+  const servicioEliminado = servicios.find(servicio => servicio.nombre === nombreServicio);
+  total -= servicioEliminado.precio;
+
+  // Actualizar la lista de los servicios reservados y el total, que se muestran por pantalla
+  mostrarServiciosReservados();
+  actualizarTotal();
+}
+
+// Función para actualizar el total acumulado
+function actualizarTotal() {
+  const totalDiv = document.getElementById('total');
+  totalDiv.innerHTML = `Total acumulado: <strong>$${total}</strong>`;
+}
+
+// Función para mostrar los servicios reservados con la opción de eliminar
+function mostrarServiciosReservados() {
+  const listaReservados = document.getElementById('lista-reservados');
+  listaReservados.innerHTML = ''; // Limpiar la lista de servicios reservados
+
+  if (serviciosReservados.length === 0) {
+    listaReservados.innerHTML = '<p>No has reservado ningún servicio aún.</p>';
+  } else {
+    const fragment = document.createDocumentFragment();  // para evitar múltiples manipulaciones del DOM.
+    serviciosReservados.forEach(servicio => {
+      const servicioDiv = document.createElement('div');
+      servicioDiv.classList.add('servicio-reservado');
+      servicioDiv.innerHTML = `
+        <p><strong>${servicio.nombre}</strong> - $${servicio.precio} 
+        <button onclick="eliminarServicio('${servicio.nombre}')">Eliminar</button></p>
+      `;
+      fragment.appendChild(servicioDiv);
+    });
+    listaReservados.appendChild(fragment);  // Solo actualiza el DOM una vez.
   }
-  
-  app()
+}
+
+// Evento para el botón "Reservar Servicios"
+document.getElementById('reservarServiciosBtn').addEventListener('click', function() {
+  if (capturarDatosFormulario()) {
+    const mensajeDiv = document.getElementById('mensaje');
+    mensajeDiv.innerHTML = `Datos de contacto registrados: <strong>${nombreUsuario}</strong> (${emailUsuario}, ${celu_Usuario}). Ahora puedes comenzar a reservar servicios.`;
+  }
+});
+
+// Inicializar la página mostrando los servicios
+mostrarServicios();
+
