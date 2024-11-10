@@ -1,15 +1,54 @@
 <!DOCTYPE html>
 <html lang="es">
-    <head>
-        <meta charset="UTF-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <title>Estética Ana</title>  
-        <link rel="stylesheet" href="assets/css/styles.css">
-    </head>
-    <body>
-        <header class = "titulo">
-            Estética de Ana
-        </header>       
-        <script src = "assets/js/comercio.js"></script>
-    </body>
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Estética Ana</title>
+  <title>Reservar Servicios</title>
+  <link rel="stylesheet" href="assets/css/styles.css">
+</head>
+
+<body>
+  <header class = "titulo">
+    Estética de Ana
+  </header>       
+  
+  <h1>Servicios Disponibles</h1>
+   
+  <!-- Formulario para ingresar los datos del usuario -->
+  <div id="formulario">
+    <h2>Ingresa tus datos:</h2>
+    <form id="formReserva">
+        <label for="nombre">Nombre:</label>
+        <input type="text" id="nombre" name="nombre" required><br><br>
+
+        <label for="email">Correo electrónico:</label>
+        <input type="email" id="email" name="email" required><br><br>
+        <span id="errorEmail" style="color: red; display: none;">Correo inválido, por favor ingresa uno válido.</span><br><br>
+
+        <label for="celu">Teléfono:</label>
+        <input type="text" id="celu" name="celu" required><br><br>
+        <span id="errorcelu" style="color: red; display: none;">Número Celular inválido, por favor ingresa uno válido.</span><br><br>
+
+        <button type="button" id="reservarServiciosBtn">Registrar y Reservar Servicios</button>
+
+        <div id="mensaje"></div>
+
+    </form>
+</div>
+
+ <!-- Contenedor de los servicios -->
+ <div id="servicios-container"></div>
+
+ <h2>Reservas</h2>
+ <div id="mensaje"></div>
+
+ <div id="lista-reservados"></div>
+
+ <h2>Total</h2>
+ <div id="total" style="margin-top: 20px; font-size: 18px; font-weight: bold;">Total acumulado: $0</div>
+
+  <!-- <script src="script.js"></script> -->
+  <script src = "assets/js/comercio.js"></script>
+</body>
 </html>
