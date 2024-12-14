@@ -1,71 +1,265 @@
-
-html,body{
-    margin: 0px;
-    background-color: #d9e9f0;
-    color: rgb(10, 10, 10);
+/* Global Styles */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: 'Arial', sans-serif;
 }
 
-.titulo{
-    text-align: center;
-    background-color: rgb(238, 14, 107);
-    color: white;
-    padding: 20px;
-    font-size: 25px;
+body {
+  background-color: #f9f9f9;
+  color: #333;
+  line-height: 1.6;
+  padding: 20px;
 }
 
-.foto1 {
-    position: relative;
-    width: 150px;
-    left: 100px;
-    margin-left: -75px;
-
+h1, h2 {
+  text-align: center;
+  color: #2c3e50;
 }
-    .servicio {
-      margin: 20px 0;
-      padding: 10px;
-      border: 1px solid #ccc;
-      border-radius: 5px;
-    }
 
-    .mensaje {
-      margin-top: 20px;
-      font-size: 18px;
-      color: blue;
-    }
+h1 {
+  font-size: 2.5rem;
+}
 
- /* Para que los elementos dentro de .servicio-info me queden en una sola línea */
+h2 {
+  font-size: 1.8rem;
+}
+
+/* Header Styles */
+.titulo {
+  background-color: #3498db;
+  padding: 20px 0;
+  color: white;
+}
+
+/* Formulario y Contenido */
+.form-container {
+  background-color: white;
+  padding: 30px;
+  border-radius: 8px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  margin-top: 30px;
+  margin-bottom: 40px; /* Este margen es el que crea el espacio entre las secciones */
+  max-width: 500px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.form-group {
+  margin-bottom: 15px;
+}
+
+label {
+  display: block;
+  margin-bottom: 5px;
+  font-weight: bold;
+}
+
+input[type="text"], input[type="email"] {
+  width: 100%;
+  padding: 8px;
+  margin-top: 5px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  font-size: 1rem;
+}
+
+button {
+  width: 100%;
+  padding: 12px;
+  background-color: #db3490;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  font-size: 1.2rem;
+  cursor: pointer;
+}
+
+button:hover {
+  background-color: #2980b9;
+}
+
+button.reservar-btn {
+  padding: 5px 10px;
+  cursor: pointer;
+  background-color: #ff0095;
+  color: white;
+  border: none;
+  border-radius: 5px;
+}
+
+button.eliminar-btn {
+  padding: 5px 10px;
+  cursor: pointer;
+  background-color: #ff0095;
+  color: white;
+  border: none;
+  border-radius: 5px;
+}
+
+/* Error messages */
+.error-message {
+  color: red;
+  display: none;
+  font-size: 0.9rem;
+}
+
+/* Servicios y Reservas */
+.servicios-container, .reservas-container {
+  margin-top: 20px;
+  padding: 10px;
+  background-color: white;
+  border-radius: 8px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.reservas-container ul {
+  list-style-type: none;
+}
+
+.reservas-container li {
+  background-color: #f2f2f2;
+  margin: 5px 0;
+  padding: 10px;
+  border-radius: 4px;
+  font-size: 1rem;
+}
+
+.total {
+  font-size: 1.5rem;
+  color: #27ae60;
+  font-weight: bold;
+}
+
+/* Botones */
+.btn {
+  padding: 12px;
+  border-radius: 4px;
+  font-size: 1rem;
+  cursor: pointer;
+}
+
+.btn-primary {
+  background-color: #3498db;
+  color: white;
+}
+
+.btn-primary:hover {
+  background-color: #2980b9;
+}
+
+.btn-secondary {
+  background-color: #95a5a6;
+  color: white;
+}
+
+.btn-secondary:hover {
+  background-color: #7f8c8d;
+}
+
+/* Estilos para el contenedor de cada servicio */
 .servicio-info {
-    display: flex;
-    align-items: center;  /* Centra verticalmente */
-    justify-content: space-between;  /* Distribuye el espacio, el botón a la derecha */
-    gap: 10px;  /* Agrega espacio entre los elementos */
-    margin-bottom: 10px;  /* Agrega un pequeño margen entre los servicios */
-  }
-  
-  .servicio-info h3 {
-    margin: 0;  /* Elimina el margen del h3 */
-  }
-  
-  .servicio-info .precio {
-    font-weight: bold;  /* Precio en Negrita */
-  }
-  
-  button.reservar-btn {
-    padding: 5px 10px;
-    cursor: pointer;
-    background-color: #ff0095;
-    color: white;
-    border: none;
-    border-radius: 5px;
-  }
-  
-  button.reservar-btn:hover {
-    background-color: #ff0095;
+  display: flex;                /* Usamos flexbox para alinear los elementos */
+  justify-content: space-between; /* Alinea los elementos al principio y final del contenedor */
+  align-items: center;          /* Alinea los elementos verticalmente al centro */
+  margin-bottom: 20px;          /* Espacio entre los servicios */
+  padding: 10px;
+  background-color: #fff;
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  overflow-wrap: break-word; /* Rompe las palabras largas si es necesario */
+  word-wrap: break-word; /* Asegura que las palabras largas se ajusten */
+}
+
+/* Estilos para el nombre del servicio y el precio */
+.nombre-servicio {
+  font-size: 1.2rem;
+  font-weight: bold;
+  color: #2c3e50;
+  flex-grow: 1;     /* Hace que el nombre ocupe todo el espacio disponible a la izquierda */
+  margin-right: 15px; /* Espacio entre el nombre y el precio */
+  white-space: normal; /* Permite que el texto se ajuste en múltiples líneas */
+  /*word-wrap: break-word; */ /* Asegura que el texto largo se divida en varias líneas si es necesario */
+}
+
+.nombre-servicio {
+  white-space: nowrap; /* Evita el salto de línea */
+  overflow: hidden; /* Asegura que el texto no se desborde */
+  text-overflow: ellipsis; /* Añade "..." si el texto se desborda */
+  display: inline-block; /* Hace que el contenedor se comporte en línea */
+  width: 80%; /* Ajusta el ancho según sea necesario */
+  font-weight: bold; /* Opcional: hace que el nombre del servicio sea más destacado */
+}
+
+.precio-servicio {
+  font-size: 1.1rem;
+  color: #27ae60;  /* Color verde para el precio */
+  margin-right: 15px; /* Espacio entre el precio y el botón */
+}
+
+/* Estilo para el botón */
+
+.reservar-btn {
+  padding: 2px 8px; 
+  background-color: #3498db;
+  color: white;
+  border: none;
+  border-radius: 1px;
+  cursor: pointer;
+  font-size: 1rem;
+  width: auto;
+}
+
+.btn-reservar:hover {
+  background-color: #2980b9;
+}
+
+/* Estilo para el mensaje */
+.mensaje {
+  display: none; /* El mensaje está oculto por defecto */
+  position: fixed; /* Fija la posición en la pantalla */
+  top: 50%; /* Centrado verticalmente */
+  left: 50%; /* Centrado horizontalmente */
+  transform: translate(-50%, -50%); /* Asegura que esté perfectamente centrado */
+  background-color: #2e97dd; /* Fondo verde (puedes cambiar el color) */
+  color: white; /* Color del texto */
+  padding: 20px; /* Espaciado interno */
+  border-radius: 10px; /* Bordes redondeados */
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Sombra para darle un efecto elevado */
+  font-family: Arial, sans-serif; /* Fuente moderna y legible */
+  font-size: 16px; /* Tamaño de fuente adecuado */
+  text-align: center; /* Centrado del texto */
+  max-width: 400px; /* Máximo ancho para el mensaje */
+  width: 100%; /* El mensaje se ajusta al ancho disponible */
+  z-index: 1000; /* Asegura que se muestre por encima de otros elementos */
+  opacity: 0; /* Empieza como invisible */
+  transition: opacity 0.5s ease-in-out; /* Transición suave */
+}
+
+/* Cuando se muestra el mensaje */
+.mensaje.show {
+  display: block; /* Muestra el mensaje */
+  opacity: 1; /* Hace el mensaje visible */
+}
+
+/* Estilos adicionales para el mensaje cuando se muestra */
+.mensaje strong {
+  font-weight: bold; /* Resalta los datos del usuario */
+  color: #FFD700; /* Color dorado para el texto resaltado */
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .form-container {
+    padding: 20px;
   }
 
-  #total {
-    font-size: 20px;
-    color: #333;
-    font-weight: bold;
-    margin-top: 20px;
+  .titulo h1 {
+    font-size: 2rem;
   }
+
+  h2 {
+    font-size: 1.5rem;
+  }
+}
