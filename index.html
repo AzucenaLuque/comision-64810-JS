@@ -4,55 +4,71 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Estética Ana</title>
-  <title>Reservar Servicios</title>
-  <!-- <link rel="stylesheet" href="assets/css/styles.css"> -->
-  <link rel="stylesheet" href="styles.css">
+  <link rel="stylesheet" href="./styles.css">
 </head>
 
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Estética de Ana</title>
+  <link rel="stylesheet" href="styles.css">
+  <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+</head>
 <body>
-  <header class = "titulo">
-    Estética de Ana
-  </header>       
-  
-  <h1>Servicios Disponibles</h1>
- 
-  
-  <!-- Formulario para ingresar los datos del usuario -->
-  <div id="formulario">
-    <h2>Ingresa tus datos:</h2>
+  <!-- Header -->
+  <header class="titulo">
+    <h1>Estética de Ana</h1>
+  </header>
+
+  <!-- Formulario de Contacto -->
+  <div id="formulario" class="form-container">
+    <h2>Datos de Contacto</h2>
+    <p>Ingresa tus datos para realizar una reserva:</p>
+
     <form id="formReserva">
-        <label for="nombre">Nombre:</label>
-        <input type="text" id="nombre" name="nombre" required><br><br>
+        <div class="form-group">
+          <label for="nombre">Nombre:</label>
+          <input type="text" id="nombre" name="nombre" required>
+        </div>
 
-        <label for="email">Correo electrónico:</label>
-        <input type="email" id="email" name="email" required><br><br>
-        <span id="errorEmail" style="color: red; display: none;">Correo inválido, por favor ingresa uno válido.</span><br><br>
+        <div class="form-group">
+          <label for="email">Correo electrónico:</label>
+          <input type="email" id="email" name="email" required>
+          <span id="errorEmail" class="error-message">Correo inválido, por favor ingresa uno válido.</span>
+        </div>
 
-        <label for="celu">Teléfono:</label>
-        <input type="text" id="celu" name="celu" required><br><br>
-        <span id="errorcelu" style="color: red; display: none;">Número Celular inválido, por favor ingresa uno válido.</span><br><br>
+        <div class="form-group">
+          <label for="celu">Teléfono:</label>
+          <input type="text" id="celu" name="celu" required>
+          <span id="errorcelu" class="error-message">Número Celular inválido, por favor ingresa uno válido.</span>
+        </div>
 
-        <button type="button" id="reservarServiciosBtn">Registrar y Reservar Servicios</button>
-
-        <div id="mensaje"></div>
-
+        <button type="button" id="reservarServiciosBtn" class="btn btn-primary">Registrar Datos de Usuario</button>
     </form>
-</div>
+  </div>
 
- <!-- Contenedor de los servicios -->
- <div id="servicios-container"></div>
+  <!-- Mensaje de confirmación -->
+  <div id="mensaje" class="mensaje"></div>
 
- <h2>Reservas</h2>
- <div id="mensaje"></div>
+  <!-- Servicios Disponibles -->
+  <h2>Servicios Disponibles</h2>
+  <div id="servicios-container" class="servicios-container"></div>
 
- <div id="lista-reservados"></div>
+  <!-- Mis Reservas -->
+  <h2>Mis Reservas</h2>
+  <div id="lista-reservados" class="reservas-container"></div>
 
- <h2>Total</h2>
- <div id="total" style="margin-top: 20px; font-size: 18px; font-weight: bold;">Total acumulado: $0</div>
+  <!-- Total acumulado -->
+  <h2>Total</h2>
+  <div id="total" class="total">Total acumulado: $0</div>
 
+  <!-- Botón para limpiar reservas -->
+  <!--<button id="limpiar-reservas-btn" class="btn btn-secondary">Limpiar Reservas</button> -->
+  <button id="limpiarReservasBtn" onclick="limpiarReservas()">Limpiar Reservas</button>
 
-  <!-- <script src="script.js"></script> -->
-  <!-- <script src = "assets/js/comercio.js"></script> -->
-  <script src = "comercio.js"></script>
+  <script src="./comercio.js"></script>
 </body>
 </html>
+
